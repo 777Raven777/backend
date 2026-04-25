@@ -2,6 +2,6 @@
 {
     public class Conversation
     {
-        public List<User> Participants { get; set; };
+        public List<User> Participants { get; set; }
     }
 }
