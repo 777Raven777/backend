@@ -2,7 +2,7 @@
 
 namespace backend.Models
 {
-    public class PrivateMessage
+    public class PrivateMessage : BaseEntity
     {
         public int ConversationId { get; set; }
         public Conversation Conversation { get; set; }

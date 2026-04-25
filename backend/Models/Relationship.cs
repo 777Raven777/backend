@@ -1,6 +1,6 @@
 ﻿namespace backend.Models
 {
-    public class Relationship
+    public class Relationship : BaseEntity
     {
         public int SenderId { get; set; }
         public User Sender { get; set; }

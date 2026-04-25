@@ -2,7 +2,7 @@
 
 namespace backend.Models
 {
-    public class ServerParticipant
+    public class ServerParticipant : BaseEntity
     {
         public int ServerId  { get; set; }
         public Server Server { get; set; }

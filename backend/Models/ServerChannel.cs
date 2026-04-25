@@ -1,8 +1,7 @@
 ﻿namespace backend.Models
 {
-    public class ServerChannel
+    public class ServerChannel : BaseEntity
     {
-        public int ServerId { get; set; }
         public string Name { get; set; }
         public Server Server { get; set; }
     }

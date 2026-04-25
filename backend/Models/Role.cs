@@ -1,9 +1,9 @@
 ﻿namespace backend.Models
 {
-    public class Role
+    public class Role : BaseEntity
     {
         public string Name;
-        public List<Action> Actions { get; set; }
+        public List<Permissions> Actions { get; set; }
         public Server server { get; set; }
     }
 }

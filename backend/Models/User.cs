@@ -18,6 +18,6 @@ namespace backend.Models
         
         public bool AcceptInvites { get; set; } = true;
 
-        public string? ProfilePictureUrl { get; set; } // this string storage the path to the profile picture
+        public string? ProfilePictureUrl { get; set; }
     }
 }
