@@ -2,7 +2,7 @@
 {
     public class Role : BaseEntity
     {
-        public string Name;
+        public string Name { get; set; }
         public List<Permissions> Actions { get; set; }
         public Server server { get; set; }
     }

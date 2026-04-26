@@ -2,6 +2,6 @@
 {
     public class Conversation : BaseEntity
     {
-        public List<User> Participants { get; set; }
+        public List<ConversationParticipant> Participants { get; set; }
     }
 }

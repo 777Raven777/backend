@@ -1,4 +1,6 @@
+using backend.ChatHub;
 using backend.Data;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using System;
 
@@ -12,6 +14,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddSignalR();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -21,10 +25,21 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+app.UseStaticFiles();
+
+//app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
+
 app.MapControllers();
+
+app.MapHub<ChatHub>("/chathub");
+
+app.MapPost("/test-broadcast", async (IHubContext<ChatHub> hubContext) =>
+{
+    await hubContext.Clients.All.SendAsync("ReceiveMessage", "Server", "Hello from backend!");
+    return Results.Ok("Message sent");
+});
 
 app.Run();

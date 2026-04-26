@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using backend.Data;
@@ -11,9 +12,11 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260425094851_FixModels")]
+    partial class FixModels
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -69,32 +72,6 @@ namespace backend.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Conversations");
-                });
-
-            modelBuilder.Entity("backend.Models.ConversationParticipant", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("ConversationId")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ConversationId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("ConversationParticipants");
                 });
 
             modelBuilder.Entity("backend.Models.PrivateMessage", b =>
@@ -279,6 +256,9 @@ namespace backend.Migrations
                     b.Property<bool>("AcceptInvites")
                         .HasColumnType("boolean");
 
+                    b.Property<int?>("ConversationId")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
@@ -302,6 +282,8 @@ namespace backend.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ConversationId");
+
                     b.ToTable("Users");
                 });
 
@@ -322,25 +304,6 @@ namespace backend.Migrations
                     b.Navigation("Sender");
 
                     b.Navigation("ServerChannel");
-                });
-
-            modelBuilder.Entity("backend.Models.ConversationParticipant", b =>
-                {
-                    b.HasOne("backend.Models.Conversation", "Conversation")
-                        .WithMany("Participants")
-                        .HasForeignKey("ConversationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("backend.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Conversation");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("backend.Models.PrivateMessage", b =>
@@ -428,6 +391,13 @@ namespace backend.Migrations
                     b.Navigation("Role");
 
                     b.Navigation("Server");
+                });
+
+            modelBuilder.Entity("backend.Models.User", b =>
+                {
+                    b.HasOne("backend.Models.Conversation", null)
+                        .WithMany("Participants")
+                        .HasForeignKey("ConversationId");
                 });
 
             modelBuilder.Entity("backend.Models.Conversation", b =>

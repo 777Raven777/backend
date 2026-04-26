@@ -3,6 +3,7 @@ namespace backend.Models
 {
     public class BaseMessage : BaseEntity
     {
+        public int SenderId { get; set; }
         public User Sender { get; set; }
 
         [Required]

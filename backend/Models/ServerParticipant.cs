@@ -7,7 +7,7 @@ namespace backend.Models
         public int ServerId  { get; set; }
         public Server Server { get; set; }
         public User Participant { get; set; }
-        public User Role { get; set; }
+        public Role Role { get; set; }
         public string CustomName { get; set; }
     }
 }
